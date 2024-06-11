@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const feedUrl = "https://www.weather.com.au/rss/forecast/";
+    const feedUrl = "http://rss.weather.com.au/nsw/sydney";
 
     fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(feedUrl)}`)
         .then(response => {
