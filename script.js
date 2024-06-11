@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const feedUrl = "http://rss.weather.com.au/nsw/sydney";
+    const feedUrl = "https://api.rss2json.com/v1/api.json?rss_url=http%3A%2F%2Frss.weather.com.au%2Fnsw%2Fsydney";
 
-    fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(feedUrl)}`)
+    fetch(feedUrl)
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -9,16 +9,13 @@ document.addEventListener("DOMContentLoaded", function () {
             return response.json();
         })
         .then(result => {
-            const data = JSON.parse(result.contents);
-            const parser = new DOMParser();
-            const xmlDoc = parser.parseFromString(data, "text/xml");
-            const items = xmlDoc.querySelectorAll("item");
+            const items = result.items;
 
             const forecastsContainer = document.getElementById("forecasts");
 
             items.forEach(item => {
-                const title = item.querySelector("title").textContent;
-                const description = item.querySelector("description").textContent;
+                const title = item.title;
+                const description = item.description;
 
                 const forecastItem = document.createElement("div");
                 forecastItem.classList.add("forecast-item");
